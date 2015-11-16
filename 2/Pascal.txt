@@ -15,7 +15,40 @@ var
 
 procedure Explode (C : Integer);
 
-begin
+Begin
+  T := -Pi;
+  I := 0;
+  Repeat
+    I := I + 1;
+    DX[I] := Sin(T)*5;
+    DY[I] := Cos(T)*5;
+    FX[I] := X;
+    FY[I] := Y;
+    T := T + 0.15;
+  Until T > Pi;
+
+  K := 0;
+  Repeat
+    For J := 1 to I do
+      begin
+        If C = 0 then
+ begin
+          PutPixel (Round(FX[J]),Round(FY[J]),0);
+ end
+        else
+          PutPixel (Round(FX[J]),Round(FY[J]),Random(GetMaxColor+1));
+        FX[J] := FX[J] + DX[J];
+        FY[J] := FY[J] - DY[J];
+        DY[J] := DY[J] - 0.2;
+      end;
+    K := K + 1;
+    Delay(10); { This was not in the original. }
+  Until Keypressed or (K > 50);
+end;
+
+procedure Explode (C : Integer);
+
+Begin
   T := -Pi;
   I := 0;
   Repeat
